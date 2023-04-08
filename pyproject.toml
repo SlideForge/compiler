@@ -1,0 +1,53 @@
+[tool.poetry]
+name = "compiler"
+version = "0.1.0"
+description = ""
+authors = ["LoC <loc@locrealloc.de>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.group.dev]
+
+[tool.poetry.group.dev.dependencies]
+isort = "^5.12.0"
+flake8 = "^6.0.0"
+mypy = "^1.1.1"
+black = {version = "^23.3.0", extras = ["d"]}
+flake8-pyproject = "^1.2.3"
+poethepoet = "^0.19.0"
+
+[tool.black]
+target-version = ["py310"]
+line-length = 120
+skip-magic-trailing-comma = true
+
+[tool.poe.tasks]
+flake8 = "flake8 . --statistics --show-source"
+isort = "isort --diff --check ."
+black = "black --diff --check ."
+mypy = "mypy ."
+format = ["black .", "isort ."]
+
+[tool.isort]
+profile = "black"
+py_version = 310
+line_length = 120
+lines_after_imports = 2
+reverse_relative = true
+
+[tool.mypy]
+strict = true
+ignore_missing_imports = true
+namespace_packages = true
+
+[tool.flake8]
+max-line-length = 120
+count = true
+indent-size = 4
+extend-exclude = [".venv"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

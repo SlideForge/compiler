@@ -1,0 +1,94 @@
+name: CI
+
+on:
+  - push
+  - pull_request
+
+env:
+  PYTHON_VERSION: "3.10"
+
+jobs:
+  codestyle:
+    name: Codestyle (black+isort)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Cache Virtual Environment
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/pypoetry
+          key: ${{ runner.os }}-venv-${{ hashFiles('poetry.lock') }}
+
+      - name: Setup poetry
+        run: |
+          pip install poetry poethepoet
+          poetry install -n --no-root
+      - name: Check code formatting with black and isort
+        run: poe black && poe isort
+
+  mypy:
+    name: Type check (mypy)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Cache Virtual Environment
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/pypoetry
+          key: ${{ runner.os }}-venv-${{ hashFiles('poetry.lock') }}
+
+      - name: Setup poetry
+        run: |
+          pip install poetry poethepoet
+          poetry install -n --no-root
+      - name: Check typing with mypy
+        run: poe mypy
+
+
+  linter:
+    name: Linter (flake8)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Cache Virtual Environment
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/pypoetry
+          key: ${{ runner.os }}-venv-${{ hashFiles('poetry.lock') }}
+
+      - name: Setup poetry
+        run: |
+          pip install poetry poethepoet
+          poetry install -n --no-root
+      - name: Lint code with flake8
+        run: poe flake8
