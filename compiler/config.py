@@ -33,4 +33,4 @@ def load_config(path: Path) -> None:
 
 	Config.REPO_LINK = config["repo"]
 	Config.LOG_LEVEL = load_log_level(config["log"]["level"])
-	Config.LOG_FILE = config["log"]["level"]
+	Config.LOG_FILE = config["log"]["file"]
