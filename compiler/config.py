@@ -31,6 +31,6 @@ def load_config(path: Path) -> None:
 	with path.open() as config_file:
 		config = safe_load(config_file)
 
-	Config.REPO_LINK = config.repo
-	Config.LOG_LEVEL = load_log_level(config.log.level)
-	Config.LOG_FILE = config.log.file
+	Config.REPO_LINK = config["repo"]
+	Config.LOG_LEVEL = load_log_level(config["log"]["level"])
+	Config.LOG_FILE = config["log"]["level"]
