@@ -17,26 +17,33 @@ You should have received a copy of the GNU General Public License
 along with SlideForge compiler.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from logging import getLogger, StreamHandler, Formatter, Logger, FileHandler
+from logging import FileHandler, Formatter, Logger, StreamHandler, getLogger
+
 from compiler.config import Config
+
 
 FORMAT = "%(levelname)s %(asctime)s | %(name)s | %(message)s"
 
 
 def get_logger(name: str) -> Logger:
-	logger = getLogger(name)
-	logger.setLevel(Config.LOG_LEVEL)
+    """
+    Function to create a basic logger
+    :param name: the loggers name
+    :return: the logger
+    """
+    logger = getLogger(name)
+    logger.setLevel(Config.LOG_LEVEL)
 
-	if hasattr(Config, "LOG_FILE"):
-		fh = FileHandler(filename=Config.LOG_FILE, encoding="utf-8")
-		logger.addHandler(fh)
+    if hasattr(Config, "LOG_FILE"):
+        fh = FileHandler(filename=Config.LOG_FILE, encoding="utf-8")
+        logger.addHandler(fh)
 
-	formatter = Formatter(FORMAT)
+    formatter = Formatter(FORMAT)
 
-	ch = StreamHandler()
-	ch.setLevel(Config.LOG_LEVEL)
-	ch.setFormatter(formatter)
+    ch = StreamHandler()
+    ch.setLevel(Config.LOG_LEVEL)
+    ch.setFormatter(formatter)
 
-	logger.addHandler(ch)
+    logger.addHandler(ch)
 
-	return logger
+    return logger

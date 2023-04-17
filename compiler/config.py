@@ -17,38 +17,44 @@ You should have received a copy of the GNU General Public License
 along with SlideForge compiler.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from pathlib import Path
-from yaml import safe_load
 import logging
+from pathlib import Path
+
+from yaml import safe_load
 
 
 class Config:
-	REPO_LINK: str
-	LOG_LEVEL: int
-	LOG_FILE: str
+    REPO_LINK: str
+    LOG_LEVEL: int
+    LOG_FILE: str
 
 
 def load_log_level(log_level: str | int) -> int:
-	if isinstance(log_level, int):
-		return log_level
+    """
+    Function that extracts and formats the log level from the config file
+    :param log_level: the log level value retrieved from the config
+    :return: the log level represented by an integer
+    """
+    if isinstance(log_level, int):
+        return log_level
 
-	num_log_level = getattr(logging, log_level.upper())
+    num_log_level = getattr(logging, log_level.upper())
 
-	if not isinstance(num_log_level, int):
-		raise ValueError(f"Invalid log level: {log_level}")
+    if not isinstance(num_log_level, int):
+        raise ValueError(f"Invalid log level: {log_level}")
 
-	return num_log_level
+    return num_log_level
 
 
 def load_config(path: Path) -> None:
-	"""
-	Load the configuration from a yaml config file
-	:param path: the path to the config file
-	"""
+    """
+    Load the configuration from a yaml config file
+    :param path: the path to the config file
+    """
 
-	with path.open() as config_file:
-		config = safe_load(config_file)
+    with path.open() as config_file:
+        config = safe_load(config_file)
 
-	Config.REPO_LINK = config["repo"]
-	Config.LOG_LEVEL = load_log_level(config["log"]["level"])
-	Config.LOG_FILE = config["log"]["file"]
+    Config.REPO_LINK = config["repo"]
+    Config.LOG_LEVEL = load_log_level(config["log"]["level"])
+    Config.LOG_FILE = config["log"]["file"]
