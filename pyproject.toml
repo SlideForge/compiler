@@ -31,7 +31,7 @@ flake8 = "flake8 . --statistics --show-source"
 isort = "isort --diff --check ."
 black = "black --diff --check ."
 mypy = "mypy ."
-format = ["black .", "isort ."]
+format = {"shell" = "black . && isort ."}
 
 [tool.isort]
 profile = "black"
