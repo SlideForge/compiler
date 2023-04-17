@@ -7,6 +7,8 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+fastapi = "^0.95.0"
+uvicorn = {extras = ["standard"], version = "^0.21.1"}
 
 [tool.poetry.group.dev]
 
@@ -17,6 +19,7 @@ mypy = "^1.1.1"
 black = {version = "^23.3.0", extras = ["d"]}
 flake8-pyproject = "^1.2.3"
 poethepoet = "^0.19.0"
+types-pyyaml = "^6.0.12.9"
 
 [tool.black]
 target-version = ["py310"]
