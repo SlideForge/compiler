@@ -18,13 +18,15 @@ along with SlideForge compiler.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from pathlib import Path
+
 from fastapi import FastAPI, status
 from pydantic import BaseModel
 
-from compiler.logger import get_logger
 from compiler.config import load_config
-
+from compiler.logger import get_logger
+from compiler.routes.compiler import route as compiler
 from compiler.routes.source_provider import route as source_provider
+
 
 load_config(Path("config.yml"))
 logger = get_logger(__name__)
@@ -32,14 +34,15 @@ logger = get_logger(__name__)
 app = FastAPI()
 
 app.include_router(source_provider.router)
+app.include_router(compiler.router)
 
 logger.info("Application startup successful")
 
 
 class StatusResponse(BaseModel):
-	status: str
+    status: str
 
 
 @app.get("/", status_code=status.HTTP_200_OK)
 async def root() -> StatusResponse:
-	return StatusResponse(status="Connection successful")
+    return StatusResponse(status="Connection successful")
