@@ -21,4 +21,4 @@ from pydantic import BaseModel
 
 
 class Repo(BaseModel):
-	repo: str
+    repo: str

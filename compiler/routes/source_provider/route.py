@@ -20,11 +20,16 @@ along with SlideForge compiler.  If not, see <http://www.gnu.org/licenses/>.
 from fastapi import APIRouter, status
 
 from compiler.config import Config
+
 from .models import Repo
+
 
 router = APIRouter(prefix="/source")
 
 
 @router.get("/repo", status_code=status.HTTP_200_OK)
-async def repo() -> Repo:
-	return Repo(repo=Config.REPO_LINK)
+async def source_repo() -> Repo:
+    """
+    Route providing a link to the source code
+    """
+    return Repo(repo=Config.REPO_LINK)
