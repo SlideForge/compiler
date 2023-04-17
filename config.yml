@@ -1,0 +1,5 @@
+repo: "https://github.com/SlideForge/compiler"
+
+log:
+  level: "DEBUG"
+  file: "logging.log"
